@@ -1,0 +1,12 @@
+﻿@page "/vault"
+@inherits VaultBase
+@using BzVault.Components
+<h3>Vault</h3>
+@if (Data == null)
+{
+    <h1>Loading---</h1>
+}
+else
+{
+    <DisplayItemList Records="Data" Next="Next" Prev="Prev"></DisplayItemList>
+}

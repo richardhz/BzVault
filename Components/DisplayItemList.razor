@@ -1,0 +1,18 @@
+﻿@inherits DisplayItemListBase
+<h3>DisplayItemList</h3>
+
+@foreach (var rec in Records)
+{
+    <DisplayItem Record="rec"></DisplayItem>
+}
+
+@if (Prev != null)
+{
+    <h1>Prev Buttons</h1>
+}
+
+@if (Next != null)
+{
+  <h1>Next Buttons</h1>
+}
+
