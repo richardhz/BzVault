@@ -3,16 +3,10 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    @*<div class="sidebar">
-            <NavMenu />
-        </div>*@
 
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         My Application
-        @*<NavLink class="nav-link" href="about" Match="NavLinkMatch.All">
-                <span class="ml-md-auto" aria-hidden="true"></span> About
-            </NavLink>*@
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu />
