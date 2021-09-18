@@ -1,4 +1,4 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@*<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">BzVault</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -34,4 +34,12 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-}
+}*@
+<MudNavMenu>
+    <MudNavLink Href="/home">Home</MudNavLink>
+    <MudNavGroup Title="Features" Expanded="true">
+        <MudNavLink Href="/vault">Vault</MudNavLink>
+        <MudNavLink Href="/notAvailable">No Action</MudNavLink>
+    </MudNavGroup>
+    <MudNavLink Href="/about">About</MudNavLink>
+</MudNavMenu>

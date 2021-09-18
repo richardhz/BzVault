@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using MudBlazor.Services;
 
 namespace BzVault
 {
@@ -26,6 +27,7 @@ namespace BzVault
                     cli.BaseAddress = new Uri(settings.BaseUrl);
                 });
             builder.Services.AddScoped<IDataService, DataService>();
+            builder.Services.AddMudServices();
             await builder.Build().RunAsync();
         }
     }

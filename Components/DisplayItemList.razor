@@ -1,10 +1,12 @@
 ﻿@inherits DisplayItemListBase
-<h3>DisplayItemList</h3>
 
-@foreach (var rec in Records)
-{
-    <DisplayItem Record="rec"></DisplayItem>
-}
+<MudList Clickable="true">
+    @foreach (var rec in Records)
+    {
+        <DisplayItem Record="rec"></DisplayItem>
+    }
+</MudList>
+
 
 @if (Prev != null)
 {
