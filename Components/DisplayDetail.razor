@@ -1,0 +1,14 @@
+﻿@inherits DisplayDetailBase
+
+
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.h5">@Record.Name</MudText>
+        <MudText Typo="Typo.body2">@Record.Description</MudText>
+        <MudText Typo="Typo.body2">@Record.Login</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Edit</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Delete</MudButton>
+    </MudCardActions>
+</MudCard>

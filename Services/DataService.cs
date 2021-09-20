@@ -30,6 +30,13 @@ namespace BzVault.Services
             return data;
         }
 
+        public async Task<ApiLoginData> GetDetail(Guid id)
+        {
+            var client = _clientFactory.CreateClient("RemoteApi");
+            var data = await client.GetFromJsonAsync<ApiLoginData>($"list/{id}", jso).ConfigureAwait(false);
+            return data;
+        }
+
         private async Task<LoginListMeta> GetJsonDataAsync(string endpoint)
         {
             LoginListMeta data = null;

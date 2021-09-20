@@ -3,18 +3,11 @@
 <MudList Clickable="true">
     @foreach (var rec in Records)
     {
-        <DisplayItem Record="rec"></DisplayItem>
+        <MudListItem Text="@rec.Name" OnClick="@(() => DoDetail(rec.Id))"></MudListItem>
     }
 </MudList>
 
-@*<MudGrid>
-    <MudItem xs="3">
-        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Prev)" OnClick="@GotoPrevPage">Prev</MudButton>
-    </MudItem>
-    <MudItem xs="3">
-        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Next)" OnClick="@GotoNextPage">Next</MudButton>
-    </MudItem>
-</MudGrid>*@
+
 
 
 

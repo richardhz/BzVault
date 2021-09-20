@@ -14,6 +14,7 @@ namespace BzVault.Pages
         [Inject] IDataService DataService { get; set; }
 
         protected IEnumerable<LoginItem> Data { get; set; }
+        protected ApiLoginData Record { get; set; }
         protected Link Next { get; set; }
         protected Link Prev { get; set; }
         protected int? Page { get; set; }
@@ -45,20 +46,21 @@ namespace BzVault.Pages
                 Data = null;
                 Page = page;
                 await GetDataAsync();
+                Record = null;
             }
         }
 
 
-        private async Task GetDetailAsync()
+        private async Task GetDetailAsync(Guid id)
         {
-            //not yet implemented
-            var data = await DataService.GetLogins(Page);
+            Record = await DataService.GetDetail(id);
+            StateHasChanged();
         }
 
 
-        protected async void GetDetail()
+        protected  async void GetDetail(Guid id)
         {
-            await GetDataAsync();
+           await GetDetailAsync(id);
         }
 
 

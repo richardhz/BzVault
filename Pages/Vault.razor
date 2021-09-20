@@ -5,7 +5,7 @@
 <MudContainer MaxWidth="MaxWidth.Medium">
     <h3>Vault</h3>
     <MudGrid>
-        <MudItem xs="6" >
+        <MudItem xs="12" sm="6" >
             <MudPaper>
                 <div style="height:600px">
                 @if (Data == null)
@@ -14,21 +14,27 @@
                 }
                 else
                 {
-                    <DisplayItemList Records="Data"  OnClick="GetDetail"></DisplayItemList>
+                    <DisplayItemList Records="Data"  OnClickItem="GetDetail"></DisplayItemList>
                 }
                 </div>
                 <div Class="bottom">
                 <MudGrid >
-                    <MudItem xs="3">
+                    <MudItem xs="6" sm="3">
                         <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Prev)" OnClick="@GotoPrevPage">Prev</MudButton>
                     </MudItem>
-                    <MudItem xs="3">
+                    <MudItem xs="6" sm="3">
                         <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Next)" OnClick="@GotoNextPage">Next</MudButton>
 
                     </MudItem>
                 </MudGrid>
                 </div>
             </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            @if (Record != null)
+            {
+                <DisplayDetail Record="Record"></DisplayDetail>
+            }
         </MudItem>
         
         
