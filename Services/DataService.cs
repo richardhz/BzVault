@@ -14,7 +14,7 @@ namespace BzVault.Services
     {
         private readonly IHttpClientFactory _clientFactory;
 
-        private readonly JsonSerializerOptions jso = new JsonSerializerOptions
+        private readonly JsonSerializerOptions jso = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
@@ -24,7 +24,7 @@ namespace BzVault.Services
             _clientFactory = factory;
         }
 
-        public async Task<LoginListMeta> GetLogins(int page = 1)
+        public async Task<LoginListMeta> GetLogins(int? page = 1)
         {
             var data = await GetJsonDataAsync($"list?pageNumber={page} &OrderBy=name");
             return data;

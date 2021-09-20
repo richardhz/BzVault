@@ -7,14 +7,16 @@
     }
 </MudList>
 
+@*<MudGrid>
+    <MudItem xs="3">
+        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Prev)" OnClick="@GotoPrevPage">Prev</MudButton>
+    </MudItem>
+    <MudItem xs="3">
+        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Next)" OnClick="@GotoNextPage">Next</MudButton>
+    </MudItem>
+</MudGrid>*@
 
-@if (Prev != null)
-{
-    <h1>Prev Buttons</h1>
-}
 
-@if (Next != null)
-{
-  <h1>Next Buttons</h1>
-}
+
+
 

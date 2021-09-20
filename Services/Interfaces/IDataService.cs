@@ -8,6 +8,6 @@ namespace BzVault.Services.Interfaces
 {
     interface IDataService
     {
-        Task<LoginListMeta> GetLogins(int page = 1);
+        Task<LoginListMeta> GetLogins(int? page = 1);
     }
 }

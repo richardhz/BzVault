@@ -2,19 +2,40 @@
 @inherits VaultBase
 @using BzVault.Components
 
-<h3>Vault</h3>
-<MudGrid>
-    <MudItem xs="6">
-        @if (Data == null)
-        {
-            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-        }
-        else
-        {
-            <DisplayItemList Records="Data" Next="Next" Prev="Prev"></DisplayItemList>
-        }
-    </MudItem>
-</MudGrid>
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <h3>Vault</h3>
+    <MudGrid>
+        <MudItem xs="6" >
+            <MudPaper>
+                <div style="height:600px">
+                @if (Data == null)
+                {
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                }
+                else
+                {
+                    <DisplayItemList Records="Data"  OnClick="GetDetail"></DisplayItemList>
+                }
+                </div>
+                <div Class="bottom">
+                <MudGrid >
+                    <MudItem xs="3">
+                        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Prev)" OnClick="@GotoPrevPage">Prev</MudButton>
+                    </MudItem>
+                    <MudItem xs="3">
+                        <MudButton Variant="Variant.Filled" Disabled="@ButtonIsDisabled(Next)" OnClick="@GotoNextPage">Next</MudButton>
+
+                    </MudItem>
+                </MudGrid>
+                </div>
+            </MudPaper>
+        </MudItem>
+        
+        
+        
+        
+    </MudGrid>
+</MudContainer>
 
 
 
