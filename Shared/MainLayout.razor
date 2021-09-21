@@ -1,4 +1,13 @@
 ﻿@inherits LayoutComponentBase
+
+@using Blazored.Toast.Configuration
+
+<BlazoredToasts Position="ToastPosition.BottomRight"
+                Timeout="5"
+                IconType="IconType.Material"
+                SuccessClass="success-toast-override"
+                 />
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />

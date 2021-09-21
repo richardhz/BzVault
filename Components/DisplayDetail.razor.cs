@@ -1,4 +1,5 @@
-﻿using BzVault.Models;
+﻿using Blazored.Toast.Services;
+using BzVault.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -11,6 +12,7 @@ namespace BzVault.Components
     public class DisplayDetailBase : ComponentBase
     {
         [Inject] IDialogService DialogService { get; set; }
+        [Inject] IToastService ToastService { get; set; }
         [Parameter]
         public ApiLoginData Record { get; set; }
         [Parameter]
@@ -37,6 +39,27 @@ namespace BzVault.Components
 
             }
 
+        }
+
+        protected async Task OpenEditDialog()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", $"This is a toast test.");
+            parameters.Add("ButtonText", $"Test");
+            parameters.Add("Color", Color.Error);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<Confirmation_Dialog>($"Test toast ", parameters, options);
+
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                ToastService.ShowInfo("This is info toast 1");
+
+                ToastService.ShowInfo("This is info toast 2", "Action Completed");
+            }
         }
     }
 }

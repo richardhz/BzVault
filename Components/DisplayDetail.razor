@@ -8,7 +8,7 @@
         <MudText Typo="Typo.body2">@Record.Login</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Edit</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@OpenEditDialog">Edit</MudButton>
         <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@OpenDeleteDialog">Delete</MudButton>
     </MudCardActions>
 </MudCard>
