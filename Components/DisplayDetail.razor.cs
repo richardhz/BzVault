@@ -14,7 +14,7 @@ namespace BzVault.Components
         [Parameter]
         public ApiLoginData Record { get; set; }
         [Parameter]
-        public EventCallback<int> OnProcessDelete { get; set; }
+        public EventCallback<Guid> OnProcessDelete { get; set; }
         [Parameter]
         public EventCallback<int> OnProcessEdit { get; set; }
 
@@ -33,8 +33,8 @@ namespace BzVault.Components
 
             if (!result.Cancelled)
             {
-                var str = $"Deleting {Record.Name}";
-                Console.WriteLine(str);
+                await OnProcessDelete.InvokeAsync(Record.Id);
+
             }
 
         }

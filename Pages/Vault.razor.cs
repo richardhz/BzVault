@@ -13,7 +13,7 @@ namespace BzVault.Pages
     {
         [Inject] IDataService DataService { get; set; }
 
-        protected IEnumerable<LoginItem> Data { get; set; }
+        protected IList<LoginItem> Data { get; set; }
         protected ApiLoginData Record { get; set; }
         protected Link Next { get; set; }
         protected Link Prev { get; set; }
@@ -32,7 +32,7 @@ namespace BzVault.Pages
         {
             var data = await DataService.GetLogins(Page);
 
-            Data = data.Records;
+            Data = data.Records.ToList();
             Next = data.Links.FirstOrDefault(l => l.Rel == "nextPage");
             Prev = data.Links.FirstOrDefault(l => l.Rel == "previousPage");
         }
@@ -50,18 +50,23 @@ namespace BzVault.Pages
             }
         }
 
-
-        private async Task GetDetailAsync(Guid id)
+        protected  async void GetDetail(Guid id)
         {
             Record = await DataService.GetDetail(id);
             StateHasChanged();
         }
 
-
-        protected  async void GetDetail(Guid id)
+        protected async void DeleteRecord(Guid id)
         {
-           await GetDetailAsync(id);
-        }
+            var status = await DataService.DeleteLogins(id);
+            if (status == "OK")
+            {
+                var record = Data.Where(r => r.Id == id).Single();
+                Data.Remove(record);
+                Record = null;
+                StateHasChanged();
+            }
+        } 
 
 
         protected static bool ButtonIsDisabled(Link item)

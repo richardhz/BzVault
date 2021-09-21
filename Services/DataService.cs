@@ -37,6 +37,13 @@ namespace BzVault.Services
             return data;
         }
 
+        public async Task<string> DeleteLogins(Guid id)
+        {
+            var client = _clientFactory.CreateClient("RemoteApi");
+            var data = await client.DeleteAsync($"{id}").ConfigureAwait(false);
+            return data.StatusCode.ToString();
+        }
+
         private async Task<LoginListMeta> GetJsonDataAsync(string endpoint)
         {
             LoginListMeta data = null;
