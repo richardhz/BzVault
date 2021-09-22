@@ -1,6 +1,7 @@
 ﻿using BzVault.Models;
 using BzVault.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace BzVault.Pages
     public class VaultBase : ComponentBase
     {
         [Inject] IDataService DataService { get; set; }
-
+        [Inject] ISnackbar Snackbar { get; set; }
         protected IList<LoginItem> Data { get; set; }
         protected ApiLoginData Record { get; set; }
         protected Link Next { get; set; }
@@ -67,6 +68,12 @@ namespace BzVault.Pages
                 StateHasChanged();
             }
         } 
+
+
+        protected  void EditRecord(ApiLoginData record)
+        {
+            Snackbar.Add($"{record.Name} Updated", Severity.Info);
+        }
 
 
         protected static bool ButtonIsDisabled(Link item)

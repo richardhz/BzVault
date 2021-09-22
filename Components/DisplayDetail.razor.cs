@@ -18,7 +18,7 @@ namespace BzVault.Components
         [Parameter]
         public EventCallback<Guid> OnProcessDelete { get; set; }
         [Parameter]
-        public EventCallback<int> OnProcessEdit { get; set; }
+        public EventCallback<ApiLoginData> OnProcessEdit { get; set; }
 
         protected async Task OpenDeleteDialog()
         {
@@ -44,17 +44,17 @@ namespace BzVault.Components
         protected async Task OpenEditDialog()
         {
 
+            var parameters = new DialogParameters { ["Record"] = Record };
+
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
 
-            var dialog = DialogService.Show<Edit_Dialog>("Edit ", options);
+            var dialog = DialogService.Show<Edit_Dialog>("Edit ", parameters, options);
 
             var result = await dialog.Result;
 
-            if (result.Cancelled)
+            if (!result.Cancelled)
             {
-                ToastService.ShowInfo("This is info toast 1");
-
-                ToastService.ShowInfo("This is info toast 2", "Action Completed");
+                await OnProcessEdit.InvokeAsync(Record);
             }
         }
     }
