@@ -43,18 +43,14 @@ namespace BzVault.Components
 
         protected async Task OpenEditDialog()
         {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"This is a toast test.");
-            parameters.Add("ButtonText", $"Test");
-            parameters.Add("Color", Color.Error);
 
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
 
-            var dialog = DialogService.Show<Confirmation_Dialog>($"Test toast ", parameters, options);
+            var dialog = DialogService.Show<Edit_Dialog>("Edit ", options);
 
             var result = await dialog.Result;
 
-            if (!result.Cancelled)
+            if (result.Cancelled)
             {
                 ToastService.ShowInfo("This is info toast 1");
 

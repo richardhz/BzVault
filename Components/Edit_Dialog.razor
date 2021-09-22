@@ -1,0 +1,29 @@
+﻿
+@inherits Edit_DialogBase
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@Data" >
+            <DataAnnotationsValidator />
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Name" HelperText="Max. 8 characters"
+                                  @bind-Value="Data.Name" For="@(() => Data.Name)" />
+                    <MudTextField Label="Login" Class="mt-3"
+                                  @bind-Value="Data.Login" For="@(() => Data.Login)" />
+                    <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                  @bind-Value="Data.Password" For="@(() => Data.Password)" InputType="InputType.Password" />
+                    <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                                  @bind-Value="Password2" For="@(() => Password2)" InputType="InputType.Password" />
+                </MudCardContent>
+               
+            </MudCard>
+            <MudText Typo="Typo.body2" Align="Align.Center" Class="my-4">
+                Fill out the form correctly to see the success message.
+            </MudText>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
+    </DialogActions>
+</MudDialog>
