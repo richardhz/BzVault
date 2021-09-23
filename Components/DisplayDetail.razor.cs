@@ -1,5 +1,4 @@
-﻿using Blazored.Toast.Services;
-using BzVault.Models;
+﻿using BzVault.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -12,7 +11,6 @@ namespace BzVault.Components
     public class DisplayDetailBase : ComponentBase
     {
         [Inject] IDialogService DialogService { get; set; }
-        [Inject] IToastService ToastService { get; set; }
         [Parameter]
         public ApiLoginData Record { get; set; }
         [Parameter]

@@ -11,7 +11,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MudBlazor.Services;
-using Blazored.Toast;
 
 namespace BzVault
 {
@@ -29,7 +28,6 @@ namespace BzVault
                 });
             builder.Services.AddScoped<IDataService, DataService>();
             builder.Services.AddMudServices();
-            builder.Services.AddBlazoredToast();
             await builder.Build().RunAsync();
         }
     }
