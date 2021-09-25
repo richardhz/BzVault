@@ -37,6 +37,13 @@ namespace BzVault.Services
             return data;
         }
 
+        public async Task<ApiLoginDataRecord> GetDetailRecord(Guid id)
+        {
+            var client = _clientFactory.CreateClient("RemoteApi");
+            var data = await client.GetFromJsonAsync<ApiLoginDataRecord>($"list/{id}", jso).ConfigureAwait(false);
+            return data;
+        }
+
         public async Task<string> DeleteLogins(Guid id)
         {
             var client = _clientFactory.CreateClient("RemoteApi");

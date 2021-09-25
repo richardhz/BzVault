@@ -15,7 +15,7 @@ namespace BzVault.Pages
         [Inject] IDataService DataService { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         protected IList<LoginItem> Data { get; set; }
-        protected ApiLoginData Record { get; set; }
+        protected ApiLoginDataRecord Record { get; set; }
         protected Link Next { get; set; }
         protected Link Prev { get; set; }
         protected int? Page { get; set; }
@@ -53,7 +53,7 @@ namespace BzVault.Pages
 
         protected  async void GetDetail(Guid id)
         {
-            Record = await DataService.GetDetail(id);
+            Record = await DataService.GetDetailRecord(id);
             StateHasChanged();
         }
 
@@ -70,9 +70,12 @@ namespace BzVault.Pages
         } 
 
 
-        protected  void EditRecord(ApiLoginData record)
+        protected  void EditRecord(ApiLoginDataRecord record)
         {
+            Snackbar.Add($"Updating {record.Name} ", Severity.Info);
+            //when we successfully update the data we then reset Record equal to record.
             Snackbar.Add($"{record.Name} Updated", Severity.Info);
+            Record = record;
         }
 
 

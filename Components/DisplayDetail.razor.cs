@@ -12,11 +12,11 @@ namespace BzVault.Components
     {
         [Inject] IDialogService DialogService { get; set; }
         [Parameter]
-        public ApiLoginData Record { get; set; }
+        public ApiLoginDataRecord Record { get; set; }
         [Parameter]
         public EventCallback<Guid> OnProcessDelete { get; set; }
         [Parameter]
-        public EventCallback<ApiLoginData> OnProcessEdit { get; set; }
+        public EventCallback<ApiLoginDataRecord> OnProcessEdit { get; set; }
 
         protected async Task OpenDeleteDialog()
         {
@@ -41,8 +41,17 @@ namespace BzVault.Components
 
         protected async Task OpenEditDialog()
         {
+            ApiLoginData recordToEdit = new ApiLoginData
+            {
+                Id = Record.Id,
+                Description = Record.Description,
+                Login = Record.Login,
+                Name = Record.Name,
+                Password = Record.Password,
+                Url = Record.Url
+            };
 
-            var parameters = new DialogParameters { ["Record"] = Record };
+            var parameters = new DialogParameters { ["Record"] = recordToEdit };
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, DisableBackdropClick = true };
 
@@ -52,7 +61,23 @@ namespace BzVault.Components
 
             if (!result.Cancelled)
             {
-                await OnProcessEdit.InvokeAsync(Record);
+                //this is where we create a new record.
+                ApiLoginDataRecord newRecord = new ApiLoginDataRecord
+                {
+                    Id = recordToEdit.Id,
+                    Description = recordToEdit.Description,
+                    Login = recordToEdit.Login,
+                    Name = recordToEdit.Name,
+                    Password = recordToEdit.Password,
+                    Url = recordToEdit.Url
+                };
+
+                if (newRecord != Record)
+                {
+                    await OnProcessEdit.InvokeAsync(newRecord);
+                }
+
+                
             }
         }
     }
