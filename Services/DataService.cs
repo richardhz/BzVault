@@ -30,12 +30,12 @@ namespace BzVault.Services
             return data;
         }
 
-        public async Task<ApiLoginData> GetDetail(Guid id)
-        {
-            var client = _clientFactory.CreateClient("RemoteApi");
-            var data = await client.GetFromJsonAsync<ApiLoginData>($"list/{id}", jso).ConfigureAwait(false);
-            return data;
-        }
+        //public async Task<ApiLoginData> GetDetail(Guid id)
+        //{
+        //    var client = _clientFactory.CreateClient("RemoteApi");
+        //    var data = await client.GetFromJsonAsync<ApiLoginData>($"list/{id}", jso).ConfigureAwait(false);
+        //    return data;
+        //}
 
         public async Task<ApiLoginDataRecord> GetDetailRecord(Guid id)
         {
@@ -44,12 +44,29 @@ namespace BzVault.Services
             return data;
         }
 
+        public async Task<HttpResponseMessage> UpdateDetailRecord(ApiLoginDataRecord record)
+        {
+            var client = _clientFactory.CreateClient("RemoteApi");
+            var id = record.Id;
+            var data = await client.PutAsJsonAsync<ApiLoginDataRecord>($"{id}", record);
+            return data;
+        }
+
+        //public async Task<ApiLoginDataRecord> CreateRecord(ApiLoginDataRecord record)
+        //{
+        //    var client = _clientFactory.CreateClient("RemoteApi");
+        //    var data = await client.PostAsJsonAsync<ApiLoginDataRecord>("",record);
+        //    //var x = data.
+        //}
+
         public async Task<string> DeleteLogins(Guid id)
         {
             var client = _clientFactory.CreateClient("RemoteApi");
             var data = await client.DeleteAsync($"{id}").ConfigureAwait(false);
             return data.StatusCode.ToString();
         }
+
+
 
         private async Task<LoginListMeta> GetJsonDataAsync(string endpoint)
         {

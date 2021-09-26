@@ -70,12 +70,18 @@ namespace BzVault.Pages
         } 
 
 
-        protected  void EditRecord(ApiLoginDataRecord record)
+        protected async void EditRecord(ApiLoginDataRecord record)
         {
             Snackbar.Add($"Updating {record.Name} ", Severity.Info);
-            //when we successfully update the data we then reset Record equal to record.
-            Snackbar.Add($"{record.Name} Updated", Severity.Info);
-            Record = record;
+            var status = await DataService.UpdateDetailRecord(record);
+            if(status.IsSuccessStatusCode && status.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                Snackbar.Add($"{record.Name} Updated", Severity.Info);
+                Record = record;
+                StateHasChanged();
+            }
+            
+            
         }
 
 
