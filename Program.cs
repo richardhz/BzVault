@@ -11,6 +11,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MudBlazor.Services;
+using BlazorState;
+using System.Reflection;
 
 namespace BzVault
 {
@@ -20,13 +22,26 @@ namespace BzVault
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-            builder.Services.AddHttpClient("RemoteApi",
+            builder.Services.Configure<WebApiOptions>(builder.Configuration.GetSection(nameof(WebApiOptions)));
+            var settings = builder.Configuration.GetSection(nameof(WebApiOptions)).Get<WebApiOptions>();
+            builder.Services.AddHttpClient(settings.NamedClient,
                 cli =>
                 {
-                    var settings = builder.Configuration.GetSection("RhzSettings").Get<RhzSettings>();
-                    cli.BaseAddress = new Uri(settings.BaseUrl);
+                    cli.BaseAddress = new Uri(settings.BaseAddress);
                 });
+
+            builder.Services.AddBlazorState
+              (
+                (aOptions) =>
+
+                  aOptions.Assemblies =
+                  new Assembly[]
+                  {
+                    typeof(Program).GetTypeInfo().Assembly,
+                  }
+              );
             builder.Services.AddScoped<IDataService, DataService>();
+            builder.Services.AddScoped<IApiClient,ApiClient>();
             builder.Services.AddMudServices();
             await builder.Build().RunAsync();
         }

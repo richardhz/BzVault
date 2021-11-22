@@ -7,11 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Extensions.Hosting;
+using BlazorState;
+using BzVault.Features.Login;
 
 namespace BzVault.Pages
 {
-    public class VaultBase : ComponentBase
+    public class VaultBase : BlazorStateComponent
     {
+        LoginState LoginState => GetState<LoginState>();
+        private LoginListMeta ListData => LoginState.LoginData;
         [Inject] IDataService DataService { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
         protected IList<LoginItem> Data { get; set; }
@@ -21,21 +26,27 @@ namespace BzVault.Pages
         protected int? Page { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            if (Page == null)
+            if (ListData.Records is null)
             {
                 Page = 1;
+                await GetDataAsync();
             }
-
-            await GetDataAsync();
+            PopulateData();
         }
 
         private async Task GetDataAsync()
         {
-            var data = await DataService.GetLogins(Page);
+            await Mediator.Send(new LoginState.LoginStatePage { RequestedPage = Page.Value });
+        }
 
-            Data = data.Records.ToList();
-            Next = data.Links.FirstOrDefault(l => l.Rel == "nextPage");
-            Prev = data.Links.FirstOrDefault(l => l.Rel == "previousPage");
+        private void PopulateData()
+        {
+            if (ListData is not null)
+            {
+                Data = ListData.Records.ToList();
+                Next = ListData.Links.FirstOrDefault(l => l.Rel == "nextPage");
+                Prev = ListData.Links.FirstOrDefault(l => l.Rel == "previousPage");
+            }
         }
 
 
@@ -47,10 +58,31 @@ namespace BzVault.Pages
                 Data = null;
                 Page = page;
                 await GetDataAsync();
+                PopulateData();
                 Record = null;
             }
         }
 
+        protected static bool ButtonIsDisabled(Link item)
+        {
+            return (item == null);
+        }
+
+        protected async Task GotoNextPage()
+        {
+            var queryString = new Uri(Next.Href).Query;
+            await GetRequestedPage(queryString);
+
+        }
+
+        protected async Task GotoPrevPage()
+        {
+            var queryString = new Uri(Prev.Href).Query;
+            await GetRequestedPage(queryString);
+
+        }
+
+        // Other data actions===================================================
         protected  async void GetDetail(Guid id)
         {
             Record = await DataService.GetDetailRecord(id);
@@ -80,29 +112,9 @@ namespace BzVault.Pages
                 Record = record;
                 StateHasChanged();
             }
-            
-            
         }
+        // Other data actions===================================================End
 
-
-        protected static bool ButtonIsDisabled(Link item)
-        {
-            return (item == null);
-        }
-
-        protected async Task GotoNextPage()
-        {
-            var queryString = new Uri(Next.Href).Query;
-            await GetRequestedPage(queryString);
-
-        }
-
-        protected async Task GotoPrevPage()
-        {
-            var queryString = new Uri(Prev.Href).Query;
-            await GetRequestedPage(queryString);
-
-        }
 
        
     }

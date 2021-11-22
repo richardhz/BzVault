@@ -9,7 +9,7 @@ namespace BzVault.Services.Interfaces
 {
     interface IDataService
     {
-        Task<LoginListMeta> GetLogins(int? page = 1);
+        //Task<LoginListMeta> GetLogins(int? page = 1);
         Task<HttpResponseMessage> UpdateDetailRecord(ApiLoginDataRecord record);
         Task<ApiLoginDataRecord> GetDetailRecord(Guid id);
         Task<string> DeleteLogins(Guid id);
